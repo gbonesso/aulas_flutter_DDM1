@@ -1,17 +1,17 @@
-build
+/*/build
 .dart_tool
 .vscode
-#android
+/*/android
 .flutter-plugins-dependencies
 .flutter-plugins
-#ios
+/*/ios
 
 .DS_Store
 pubspec.lock
-linux
-macos
-windows
-web
+/*/linux
+/*/macos
+/*/windows
+/*/web
 android/app/google-services.json
 
 # IntelliJ related
