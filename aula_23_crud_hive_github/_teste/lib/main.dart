@@ -1,14 +1,24 @@
 import 'package:flutter/material.dart';
 // 1. Initialize Hive
-//import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+//1.
 
 import 'screens/read_screen.dart';
 import 'screens/create_screen.dart';
 import 'screens/update_screen.dart';
 
-void main() {
+//1.
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+  await Hive.openBox('data_box');
+  
   runApp(const MyApp());
 }
+//1.
+/*void main() {
+  runApp(const MyApp());
+}*/
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
