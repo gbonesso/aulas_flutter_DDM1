@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class HomePage extends StatelessWidget with WidgetsBindingObserver {
+class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
@@ -77,27 +77,5 @@ class HomePage extends StatelessWidget with WidgetsBindingObserver {
         ),
       ),
     );
-  }
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) async {
-    switch (state) {
-      case AppLifecycleState.resumed:
-        print('resumed');
-        break;
-      case AppLifecycleState.inactive:
-        print('inactive');
-        await box.flush();
-        break;
-      case AppLifecycleState.paused:
-        print('paused');
-        break;
-      case AppLifecycleState.detached:
-        print('detached');
-        break;
-      case AppLifecycleState.hidden:
-        // TODO: Handle this case.
-        break;
-    }
   }
 }
