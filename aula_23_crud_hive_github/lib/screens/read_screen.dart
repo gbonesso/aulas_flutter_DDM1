@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
+// 8
 import 'package:hive_flutter/adapters.dart';
 
 import '/screens/create_screen.dart';
 import '/screens/update_screen.dart';
+// 8
 
 class ReadScreen extends StatefulWidget {
   const ReadScreen({super.key});
@@ -13,18 +15,25 @@ class ReadScreen extends StatefulWidget {
 }
 
 class _ReadScreenState extends State<ReadScreen> {
+  // 9
   late final Box dataBox;
+  // 9
 
   @override
   void initState() {
     super.initState();
+    // 10
     dataBox = Hive.box('data_box');
+    // 10
   }
 
+  // 20
   _deleteData(int index) {
     dataBox.deleteAt(index);
   }
+  // 20
 
+  // 11
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,17 +69,19 @@ class _ReadScreenState extends State<ReadScreen> {
                 return ListTile(
                   leading: IconButton(
                     onPressed: () {
-                       Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => UpdateScreen(
-                    index: index,
-                    data: getData,
-                    titleController: getData.title,
-                    descriptionController: getData.description,
-                ),
-            ),
-        );
+                      // 15
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => UpdateScreen(
+                            index: index,
+                            data: getData,
+                            titleController: getData.title,
+                            descriptionController: getData.description,
+                          ),
+                        ),
+                      );
+                      // 15
                     },
                     icon: const Icon(Icons.edit),
                   ),
@@ -78,7 +89,9 @@ class _ReadScreenState extends State<ReadScreen> {
                   subtitle: Text(getData.description),
                   trailing: IconButton(
                     onPressed: () {
+                      // 21
                       _deleteData(index);
+                      // 21
                     },
                     icon: const Icon(Icons.delete),
                   ),
@@ -90,4 +103,5 @@ class _ReadScreenState extends State<ReadScreen> {
       ),
     );
   }
+  // 11
 }

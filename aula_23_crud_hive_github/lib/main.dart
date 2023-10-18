@@ -2,18 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:todo_app/screens/read_screen.dart';
 
 import 'screens/create_screen.dart';
-import 'screens/update_screen.dart';
+//import 'screens/update_screen.dart';
 
+// 1
 import 'package:hive_flutter/hive_flutter.dart';
+// 1
 
 import 'model/model.dart';
 
+late final Box box;
+
 void main() async {
+  // 2
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
-  Hive.registerAdapter(DataAdapter()); // Add this line
-  await Hive.openBox('data_box');
-  
+  // 13
+  Hive.registerAdapter(DataAdapter());
+  // 13
+  box = await Hive.openBox('data_box');
+  // 2
+
   runApp(const MyApp());
 }
 
@@ -29,7 +37,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatelessWidget with WidgetsBindingObserver {
   const HomePage({super.key});
 
   @override
@@ -65,20 +73,31 @@ class HomePage extends StatelessWidget {
                 'Read',
               ),
             ),
-            ElevatedButton(
-              onPressed: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const UpdateScreen(),
-                ),
-              ),
-              child: const Text(
-                'Update',
-              ),
-            ),
           ],
         ),
       ),
     );
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) async {
+    switch (state) {
+      case AppLifecycleState.resumed:
+        print('resumed');
+        break;
+      case AppLifecycleState.inactive:
+        print('inactive');
+        await box.flush();
+        break;
+      case AppLifecycleState.paused:
+        print('paused');
+        break;
+      case AppLifecycleState.detached:
+        print('detached');
+        break;
+      case AppLifecycleState.hidden:
+        // TODO: Handle this case.
+        break;
+    }
   }
 }

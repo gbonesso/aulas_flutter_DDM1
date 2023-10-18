@@ -6,45 +6,52 @@ import '../model/model.dart';
 import 'read_screen.dart';
 
 class UpdateScreen extends StatefulWidget {
+  // 14
   final int? index;
   final Data? data;
-  final titleController;
-  final descriptionController;
+  final String titleController;
+  final String descriptionController;
 
   const UpdateScreen(
       {super.key,
       this.index,
       this.data,
-      this.titleController,
-      this.descriptionController});
+      required this.titleController,
+      required this.descriptionController});
+  // 14
 
   @override
   State<UpdateScreen> createState() => _UpdateScreenState();
 }
 
 class _UpdateScreenState extends State<UpdateScreen> {
+  // 16
   late final Box dataBox;
-  //late final TextEditingController titleController;
-  //late final TextEditingController descriptionController;
-  final TextEditingController _titleController = TextEditingController();
-  final TextEditingController _descriptionController = TextEditingController();
+  late final TextEditingController titleController;
+  late final TextEditingController descriptionController;
+  // 16
 
   @override
   void initState() {
     super.initState();
 
     dataBox = Hive.box('data_box');
-    //titleController = TextEditingController(text: widget.titleController);
-    //descriptionController =TextEditingController(text: widget.descriptionController);
+    // 17
+    titleController = TextEditingController(text: widget.titleController);
+    descriptionController =
+        TextEditingController(text: widget.descriptionController);
+    // 17
   }
 
+  // 18
   _updateData() {
     Data newData = Data(
-      title: _titleController.text,
-      description: _descriptionController.text,
+      title: titleController.text,
+      description: descriptionController.text,
     );
     dataBox.putAt(widget.index!, newData);
   }
+  // 18
 
   @override
   Widget build(BuildContext context) {
@@ -60,10 +67,10 @@ class _UpdateScreenState extends State<UpdateScreen> {
       body: Column(
         children: [
           Padding(
-            padding: EdgeInsets.all(10.0),
+            padding: const EdgeInsets.all(10.0),
             child: TextField(
-              controller: _titleController,
-              decoration: InputDecoration(
+              controller: titleController,
+              decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 hintText: 'Enter Title',
                 labelText: 'Title',
@@ -71,26 +78,30 @@ class _UpdateScreenState extends State<UpdateScreen> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.all(10.0),
+            padding: const EdgeInsets.all(10.0),
             child: TextField(
-              controller: _descriptionController,
+              controller: descriptionController,
               maxLines: 3,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 hintText: 'Enter Description',
                 labelText: 'Description',
               ),
             ),
           ),
-          ElevatedButton(onPressed: () {
-            _updateData();
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => const ReadScreen(),
-            ),
-        );
-          }, child: Text('UPDATE DATA'))
+          ElevatedButton(
+              onPressed: () {
+                // 19
+                _updateData();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ReadScreen(),
+                  ),
+                );
+                // 19
+              },
+              child: const Text('UPDATE DATA'))
         ],
       ),
     );
